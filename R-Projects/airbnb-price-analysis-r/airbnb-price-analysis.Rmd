@@ -1,0 +1,49 @@
+---
+title: "Airbnb Price Analysis"
+author: "Seren Sakallı"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## 📂 Veri Yükleme
+
+```{r}
+df <- read_csv("data/listings.csv")
+head(df)
+```
+
+## 🧹 Fiyat Kolonunu Temizleme
+
+```{r}
+df <- df %>%
+  mutate(price = parse_number(price))
+```
+
+## 📊 Ortalama Fiyat (Oda Tipine Göre)
+
+```{r}
+df %>%
+  group_by(room_type) %>%
+  summarise(mean_price = mean(price, na.rm = TRUE))
+```
+
+## 📈 Grafik
+
+```{r}
+df %>%
+  group_by(room_type) %>%
+  summarise(mean_price = mean(price, na.rm = TRUE)) %>%
+  ggplot(aes(x = reorder(room_type, mean_price), y = mean_price)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Average Price by Room Type",
+    x = "Room Type",
+    y = "Price (USD)"
+  ) +
+  theme_minimal()
+```
