@@ -13,4 +13,4 @@ This SQL project analyzes Airbnb listings data to explore room types, average pr
 ## 🧰 Tools Used
 - MySQL Workbench
 - SQL
-- Dataset: [Your dataset source or "Cleaned Airbnb dataset"]
+- Dataset: listings_cleaned
